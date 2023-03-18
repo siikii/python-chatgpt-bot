@@ -62,8 +62,10 @@ async def generate_response(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     total_tokens = response["usage"]["total_tokens"]
 
+    token_warning = f"Total tokens used: {total_tokens}"
+
     if total_tokens > 3000:
-        response_text = (
+        token_warning = (
             "I'm sorry, Token limit reached. The conversation has been reset."
         )
         messages.clear()
@@ -74,12 +76,12 @@ async def generate_response(update: Update, context: ContextTypes.DEFAULT_TYPE):
             }
         )
 
+    response_message = f"{response_text}\n[{token_warning}]"
+
     # Send message back
     await context.bot.send_message(
-        chat_id=update.effective_chat.id, text=response_text
+        chat_id=update.effective_chat.id, text=response_message
     )
-
-    print(total_tokens)
 
 
 # Handle unknow command
