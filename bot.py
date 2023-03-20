@@ -34,7 +34,7 @@ personality = [
 messages = [
     {
         "role": "system",
-        "content": personality[0],
+        "content": personality[1],
     },
 ]
 
